@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use http\Env\Request;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
 class Folder extends Item
 {
@@ -29,6 +27,10 @@ class Folder extends Item
 
     public function inSubFolders($id)
     {
+        if ($this->id === $id) {
+            return true;
+        }
+
         foreach ($this->children as $item) {
             if ($item->inSubFolders($id)) {
                 return true;

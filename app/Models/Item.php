@@ -16,12 +16,13 @@ class Item extends Model
     protected $fillable = [
         'name',
         'parent_id',
+        'user_id'
     ];
 
     protected static function boot()
     {
         parent::boot();
-        static::addGlobalScope('age', function (Builder $builder) {
+        static::addGlobalScope('type', function (Builder $builder) {
             if (!static::$type) {
                 return;
             }

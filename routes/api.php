@@ -20,5 +20,8 @@ Route::post('authorization', [UserController::class, 'authorization']);
 Route::post('registration', [UserController::class, 'registration']);
 
 Route::get('folders', [FolderController::class, 'index']);
+Route::post('folders', [FolderController::class, 'create'])->middleware('auth:api');
+
+
 Route::get('folders/{folder}', [FolderController::class, 'show']);
 Route::patch('folders/{folder}', [FolderController::class, 'update']);
