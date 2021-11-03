@@ -16,12 +16,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('authorization', [UserController::class, 'authorization']);
-Route::post('registration', [UserController::class, 'registration']);
-
-Route::get('folders', [FolderController::class, 'index']);
-Route::post('folders', [FolderController::class, 'create'])->middleware('auth:api');
+Route::post('authorization', [UserController::class, 'authorization'])->withoutMiddleware(['auth:api']);
+Route::post('registration', [UserController::class, 'registration'])->withoutMiddleware(['auth:api']);
 
 
-Route::get('folders/{folder}', [FolderController::class, 'show']);
-Route::patch('folders/{folder}', [FolderController::class, 'update']);
+Route::prefix('folders')->group(function () {
+    Route::get('/', [FolderController::class, 'index']);
+    Route::post('/', [FolderController::class, 'create']);
+
+    Route::get('/{folder}', [FolderController::class, 'show']);
+    Route::patch('/{folder}', [FolderController::class, 'update']);
+
+    Route::post('/{folder}/files', [FolderController::class, 'uploads']);
+});
+
+
+
